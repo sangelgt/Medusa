@@ -1,0 +1,760 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>KTM — Medusa Group: Nueva Visión y Estrategia</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap');
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: 'Inter', -apple-system, sans-serif;
+    background: #0a0a0f;
+    color: #e8e8ed;
+    overflow: hidden;
+    height: 100vh;
+    width: 100vw;
+  }
+
+  .slide-container {
+    display: flex;
+    transition: transform 0.6s cubic-bezier(0.22, 1, 0.36, 1);
+    height: 100vh;
+  }
+
+  .slide {
+    min-width: 100vw;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 60px 80px;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .slide::before {
+    content: '';
+    position: absolute;
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+    background: radial-gradient(ellipse at 30% 50%, rgba(59, 130, 246, 0.06) 0%, transparent 60%),
+                radial-gradient(ellipse at 70% 50%, rgba(139, 92, 246, 0.04) 0%, transparent 60%);
+    pointer-events: none;
+  }
+
+  .slide-number {
+    position: absolute;
+    bottom: 30px;
+    right: 40px;
+    font-size: 14px;
+    color: rgba(255,255,255,0.2);
+    font-weight: 500;
+    letter-spacing: 2px;
+  }
+
+  .nav {
+    position: fixed;
+    bottom: 30px;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    gap: 12px;
+    align-items: center;
+    z-index: 100;
+  }
+
+  .nav button {
+    background: rgba(255,255,255,0.08);
+    border: 1px solid rgba(255,255,255,0.12);
+    color: #e8e8ed;
+    padding: 10px 24px;
+    border-radius: 8px;
+    cursor: pointer;
+    font-family: 'Inter', sans-serif;
+    font-size: 14px;
+    font-weight: 500;
+    transition: all 0.2s;
+    backdrop-filter: blur(8px);
+  }
+
+  .nav button:hover {
+    background: rgba(255,255,255,0.15);
+    border-color: rgba(255,255,255,0.2);
+  }
+
+  .nav button:disabled {
+    opacity: 0.3;
+    cursor: not-allowed;
+  }
+
+  .dots {
+    display: flex;
+    gap: 8px;
+  }
+
+  .dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: rgba(255,255,255,0.15);
+    cursor: pointer;
+    transition: all 0.3s;
+  }
+
+  .dot.active {
+    background: #3b82f6;
+    width: 24px;
+    border-radius: 4px;
+  }
+
+  h1 {
+    font-size: clamp(40px, 6vw, 80px);
+    font-weight: 800;
+    letter-spacing: -2px;
+    line-height: 1.05;
+    text-align: center;
+    max-width: 900px;
+  }
+
+  h1 .highlight {
+    background: linear-gradient(135deg, #3b82f6, #8b5cf6);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  h2 {
+    font-size: clamp(28px, 3.5vw, 48px);
+    font-weight: 700;
+    letter-spacing: -1px;
+    margin-bottom: 16px;
+    text-align: center;
+  }
+
+  h2 .highlight {
+    background: linear-gradient(135deg, #3b82f6, #8b5cf6);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  .subtitle {
+    font-size: clamp(16px, 1.5vw, 24px);
+    color: rgba(255,255,255,0.5);
+    font-weight: 400;
+    text-align: center;
+    max-width: 700px;
+    line-height: 1.6;
+    margin-top: 16px;
+  }
+
+  .label {
+    display: inline-block;
+    padding: 6px 16px;
+    border-radius: 100px;
+    font-size: 12px;
+    font-weight: 600;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    margin-bottom: 20px;
+  }
+
+  .label-blue {
+    background: rgba(59, 130, 246, 0.15);
+    color: #60a5fa;
+    border: 1px solid rgba(59, 130, 246, 0.2);
+  }
+
+  .label-purple {
+    background: rgba(139, 92, 246, 0.15);
+    color: #a78bfa;
+    border: 1px solid rgba(139, 92, 246, 0.2);
+  }
+
+  .label-green {
+    background: rgba(34, 197, 94, 0.15);
+    color: #4ade80;
+    border: 1px solid rgba(34, 197, 94, 0.2);
+  }
+
+  .grid-2 {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 24px;
+    max-width: 1000px;
+    width: 100%;
+    margin-top: 32px;
+  }
+
+  .grid-3 {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 20px;
+    max-width: 1100px;
+    width: 100%;
+    margin-top: 32px;
+  }
+
+  .grid-4 {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr 1fr;
+    gap: 16px;
+    max-width: 1100px;
+    width: 100%;
+    margin-top: 32px;
+  }
+
+  .card {
+    background: rgba(255,255,255,0.03);
+    border: 1px solid rgba(255,255,255,0.06);
+    border-radius: 16px;
+    padding: 28px 24px;
+    transition: all 0.3s;
+  }
+
+  .card:hover {
+    background: rgba(255,255,255,0.05);
+    border-color: rgba(255,255,255,0.1);
+    transform: translateY(-2px);
+  }
+
+  .card-icon {
+    font-size: 32px;
+    margin-bottom: 12px;
+  }
+
+  .card h3 {
+    font-size: 18px;
+    font-weight: 600;
+    margin-bottom: 8px;
+  }
+
+  .card p {
+    font-size: 14px;
+    color: rgba(255,255,255,0.5);
+    line-height: 1.6;
+  }
+
+  .card .amount {
+    font-size: 28px;
+    font-weight: 800;
+    color: #60a5fa;
+    margin-bottom: 4px;
+  }
+
+  .card .amount.green {
+    color: #4ade80;
+  }
+
+  .card .amount.purple {
+    color: #a78bfa;
+  }
+
+  .card .amount.orange {
+    color: #fb923c;
+  }
+
+  .stat-row {
+    display: flex;
+    gap: 40px;
+    justify-content: center;
+    margin-top: 40px;
+  }
+
+  .stat {
+    text-align: center;
+  }
+
+  .stat-number {
+    font-size: clamp(36px, 4vw, 64px);
+    font-weight: 800;
+    letter-spacing: -2px;
+  }
+
+  .stat-number.blue { color: #60a5fa; }
+  .stat-number.green { color: #4ade80; }
+  .stat-number.purple { color: #a78bfa; }
+  .stat-number.orange { color: #fb923c; }
+
+  .stat-label {
+    font-size: 14px;
+    color: rgba(255,255,255,0.4);
+    font-weight: 500;
+    margin-top: 4px;
+  }
+
+  .pipeline {
+    display: flex;
+    align-items: center;
+    gap: 0;
+    max-width: 1100px;
+    width: 100%;
+    margin-top: 40px;
+  }
+
+  .pipeline-step {
+    flex: 1;
+    text-align: center;
+    padding: 20px 12px;
+    background: rgba(255,255,255,0.03);
+    border: 1px solid rgba(255,255,255,0.06);
+    border-radius: 12px;
+    position: relative;
+  }
+
+  .pipeline-step + .pipeline-step {
+    margin-left: 16px;
+  }
+
+  .pipeline-step::after {
+    content: '→';
+    position: absolute;
+    right: -14px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: rgba(255,255,255,0.2);
+    font-size: 20px;
+  }
+
+  .pipeline-step:last-child::after {
+    display: none;
+  }
+
+  .pipeline-step .step-icon { font-size: 24px; margin-bottom: 8px; }
+  .pipeline-step .step-label { font-size: 12px; color: rgba(255,255,255,0.5); margin-top: 4px; }
+  .pipeline-step .step-value { font-size: 16px; font-weight: 700; }
+
+  .timeline {
+    max-width: 900px;
+    width: 100%;
+    margin-top: 32px;
+  }
+
+  .timeline-item {
+    display: flex;
+    gap: 24px;
+    padding: 16px 0;
+    border-bottom: 1px solid rgba(255,255,255,0.05);
+  }
+
+  .timeline-item:last-child { border-bottom: none; }
+
+  .timeline-phase {
+    font-size: 14px;
+    font-weight: 600;
+    color: #60a5fa;
+    min-width: 100px;
+  }
+
+  .timeline-content {
+    flex: 1;
+  }
+
+  .timeline-content h4 {
+    font-size: 16px;
+    font-weight: 600;
+  }
+
+  .timeline-content p {
+    font-size: 13px;
+    color: rgba(255,255,255,0.45);
+    margin-top: 4px;
+  }
+
+  .footer-ktm {
+    position: fixed;
+    top: 24px;
+    left: 40px;
+    font-size: 13px;
+    font-weight: 700;
+    letter-spacing: 3px;
+    color: rgba(255,255,255,0.15);
+    z-index: 100;
+  }
+
+  .footer-ktm span {
+    color: #3b82f6;
+  }
+
+  @media (max-width: 768px) {
+    .slide { padding: 40px 24px; }
+    .grid-2, .grid-3, .grid-4 { grid-template-columns: 1fr; }
+    .pipeline { flex-direction: column; gap: 8px; }
+    .pipeline-step + .pipeline-step { margin-left: 0; }
+    .pipeline-step::after { display: none; }
+    .stat-row { flex-direction: column; gap: 20px; }
+    .nav { gap: 8px; }
+    .nav button { padding: 8px 16px; font-size: 12px; }
+    .timeline-item { flex-direction: column; gap: 8px; }
+  }
+</style>
+</head>
+<body>
+
+<div class="footer-ktm">KTM<span>.</span></div>
+
+<div class="slide-container" id="slides">
+
+  <!-- SLIDE 1: TITLE -->
+  <div class="slide">
+    <div class="label label-blue">KTM · Kick The Mountain</div>
+    <h1>Medusa Group<br><span class="highlight">Nueva Visión y Estrategia</span></h1>
+    <p class="subtitle">Transformando el marketing de afiliados con inteligencia artificial y un avatar IA como embajadora de marca. Amazon Associates + Contenido Generativo = Escalabilidad.</p>
+    <div class="stat-row">
+      <div class="stat">
+        <div class="stat-number blue">14+</div>
+        <div class="stat-label">Programas Bounty</div>
+      </div>
+      <div class="stat">
+        <div class="stat-number green">3</div>
+        <div class="stat-label">Mercados (ES · US · UK)</div>
+      </div>
+      <div class="stat">
+        <div class="stat-number purple">10</div>
+        <div class="stat-label">Variantes Avatar IA</div>
+      </div>
+      <div class="stat">
+        <div class="stat-number orange">€655</div>
+        <div class="stat-label">Proyección Mes 6</div>
+      </div>
+    </div>
+    <p style="margin-top: 48px; font-size: 13px; color: rgba(255,255,255,0.2);">Angel Salazar · Gustavo Salazar · Joint Venture 50/50</p>
+  </div>
+
+  <!-- SLIDE 2: EL PROBLEMA Y LA OPORTUNIDAD -->
+  <div class="slide">
+    <div class="label label-purple">El Porqué</div>
+    <h2>De la <span class="highlight">incertidumbre</span> a la <span class="highlight">maquina</span> de ingresos</h2>
+    <p class="subtitle">El marketing de afiliados tradicional es lento, depende de trafico organico y no escala sin contenido constante. Nosotros automatizamos el contenido con IA.</p>
+    <div class="grid-2">
+      <div class="card">
+        <div class="card-icon">⚠️</div>
+        <h3>El Problema</h3>
+        <p>Crear contenido de afiliados manualmente requiere horas por pieza. Sin consistencia no hay conversiones. La mayoria abandona antes de ver resultados.</p>
+      </div>
+      <div class="card">
+        <div class="card-icon">💡</div>
+        <h3>Nuestra Solución</h3>
+        <p>Avatar IA generado con Nano Banana 2 + ComfyUI produce videos 10x mas rapido. Un solo avatar multiplataforma. Escalamos contenido sin escalar personas.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- SLIDE 3: AMAZON BOUNTIES -->
+  <div class="slide">
+    <div class="label label-blue">Pilar 1</div>
+    <h2>Amazon Associates<br><span class="highlight">14+ Programas Bounty</span></h2>
+    <p class="subtitle">Pago fijo por registro en servicios Amazon. Sin inventario, sin envio, sin atencion al cliente.</p>
+    <div class="grid-4">
+      <div class="card">
+        <div class="card-icon">🎧</div>
+        <div class="amount">€10-15</div>
+        <h3>Audible</h3>
+        <p>Bounty mas alto. Prioridad #1. Nicho audiolibros en crecimiento.</p>
+      </div>
+      <div class="card">
+        <div class="card-icon">📦</div>
+        <div class="amount green">€3</div>
+        <h3>Prime Trial</h3>
+        <p>Portal universal. Todo publico. 30 dias trial.</p>
+      </div>
+      <div class="card">
+        <div class="card-icon">🎬</div>
+        <div class="amount green">€3</div>
+        <h3>Prime Video</h3>
+        <p>Nicho streaming. Contenido curado.</p>
+      </div>
+      <div class="card">
+        <div class="card-icon">🎵</div>
+        <div class="amount green">€3</div>
+        <h3>Music Unlimited</h3>
+        <p>Nicho musica. Promocion facil.</p>
+      </div>
+      <div class="card">
+        <div class="card-icon">📚</div>
+        <div class="amount green">€3</div>
+        <h3>Kindle Unlimited</h3>
+        <p>Sinergia con libros. Nicho lectores.</p>
+      </div>
+      <div class="card">
+        <div class="card-icon">🎓</div>
+        <div class="amount green">€3</div>
+        <h3>Prime Student</h3>
+        <p>Nicho universitario. 90 dias trial.</p>
+      </div>
+      <div class="card">
+        <div class="card-icon">💒</div>
+        <div class="amount orange">€3.50</div>
+        <h3>Wedding Registry</h3>
+        <p>Requiere 3+ compras previas. Largo plazo.</p>
+      </div>
+      <div class="card">
+        <div class="card-icon">👶</div>
+        <div class="amount orange">€1.50</div>
+        <h3>Baby Registry</h3>
+        <p>Requiere 3+ compras previas. Largo plazo.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- SLIDE 4: AVATAR IA -->
+  <div class="slide">
+    <div class="label label-purple">Pilar 2</div>
+    <h2>Avatar IA<br><span class="highlight">La embajadora digital</span></h2>
+    <p class="subtitle">Generado con Google Flow Nano Banana 2 + ComfyUI. Femenino, 3D realista, original. 10 variantes para todo tipo de contenido.</p>
+    <div class="grid-3">
+      <div class="card">
+        <div class="card-icon">🎨</div>
+        <h3>Generación</h3>
+        <p>Nano Banana 2 en Google Flow. Prompt master con descripcion detallada. 10 variantes: hero, perfil, gestual, lifestyle, producto, icono.</p>
+      </div>
+      <div class="card">
+        <div class="card-icon">🎬</div>
+        <h3>Animación</h3>
+        <p>ComfyUI + LTX-2.3 distilled (16GB VRAM). I2V desde imagen avatar. 5-10s por video. $0.04-0.08/video de costo GPU.</p>
+      </div>
+      <div class="card">
+        <div class="card-icon">📢</div>
+        <h3>Distribución</h3>
+        <p>TikTok · Instagram Reels · YouTube Shorts · Telegram. Contenido 3-5 videos/semana. Multiplicador de CTR de 2-4x.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- SLIDE 5: ARQUITECTURA -->
+  <div class="slide">
+    <div class="label label-green">El Sistema</div>
+    <h2>Arquitectura de <span class="highlight">Ingresos</span></h2>
+    <p class="subtitle">Avatar IA genera contenido → dirige a landings → captura leads → email nurture → conversion bounty</p>
+    <div class="pipeline">
+      <div class="pipeline-step">
+        <div class="step-icon">🎭</div>
+        <div class="step-value">Avatar IA</div>
+        <div class="step-label">Contenido viral</div>
+      </div>
+      <div class="pipeline-step">
+        <div class="step-icon">📱</div>
+        <div class="step-value">TikTok · IG · YT</div>
+        <div class="step-label">Distribucion organica + paga</div>
+      </div>
+      <div class="pipeline-step">
+        <div class="step-icon">📝</div>
+        <div class="step-value">Landing + Lead Magnet</div>
+        <div class="step-label">Captura de email</div>
+      </div>
+      <div class="pipeline-step">
+        <div class="step-icon">📧</div>
+        <div class="step-value">Email Nurture (n8n)</div>
+        <div class="step-label">14 secuencias bounty</div>
+      </div>
+      <div class="pipeline-step">
+        <div class="step-icon">💰</div>
+        <div class="step-value green">Conversión</div>
+        <div class="step-label">Bounty €1.50-15</div>
+      </div>
+    </div>
+    <div class="grid-2" style="margin-top: 32px; max-width: 700px;">
+      <div class="card" style="text-align: center;">
+        <div style="font-size: 13px; color: rgba(255,255,255,0.4);">Inversión Mensual</div>
+        <div style="font-size: 36px; font-weight: 800; color: #fb923c; margin-top: 4px;">$525</div>
+        <div style="font-size: 13px; color: rgba(255,255,255,0.4);">Meta Ads $500 + GPU $10 + Voz $5 + Hosting $10</div>
+      </div>
+      <div class="card" style="text-align: center;">
+        <div style="font-size: 13px; color: rgba(255,255,255,0.4);">Revenue Proyectado Mes 6</div>
+        <div style="font-size: 36px; font-weight: 800; color: #4ade80; margin-top: 4px;">€655</div>
+        <div style="font-size: 13px; color: rgba(255,255,255,0.4);">Bounties €555 + Producto €100</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- SLIDE 6: HOJA DE RUTA -->
+  <div class="slide">
+    <div class="label label-blue">Roadmap</div>
+    <h2>Hoja de Ruta <span class="highlight">0-6 Meses</span></h2>
+    <p class="subtitle">Seis fases progresivas: planeacion → validacion → escalado → diversificacion → sistematizacion</p>
+    <div class="timeline">
+      <div class="timeline-item">
+        <div class="timeline-phase">FASE 0 · Sem 0</div>
+        <div class="timeline-content">
+          <h4>Planeación</h4>
+          <p>Crear avatar, generar enlaces, configurar landings, setup ComfyUI, preparar templates. Documents: 100% listo.</p>
+        </div>
+      </div>
+      <div class="timeline-item">
+        <div class="timeline-phase">FASE 1 · Sem 1-4</div>
+        <div class="timeline-content">
+          <h4>Fundación</h4>
+          <p>4 videos piloto, campanas FB Ads ($500), tracking UTM, 15-20 videos total. Medir CPL por bounty.</p>
+        </div>
+      </div>
+      <div class="timeline-item">
+        <div class="timeline-phase">FASE 2 · Sem 5-8</div>
+        <div class="timeline-content">
+          <h4>Validación</h4>
+          <p>A/B test avatar vs imagen. Decidir allocation budget por mejor CPL. 20-25 videos/mes. Reviews largos en YT.</p>
+        </div>
+      </div>
+      <div class="timeline-item">
+        <div class="timeline-phase">FASE 3 · Sem 9-12</div>
+        <div class="timeline-content">
+          <h4>Escalado</h4>
+          <p>25-30 videos/mes. Campanas optimizadas. SEO bounty-optimizado. 14 secuencias email completas.</p>
+        </div>
+      </div>
+      <div class="timeline-item">
+        <div class="timeline-phase">FASE 4-5 · Sem 13-20</div>
+        <div class="timeline-content">
+          <h4>Diversificación</h4>
+          <p>Wedding + Baby Registry. Expansion LATAM (MX + BR). Merch On Demand. SEO: 10 articulos blog.</p>
+        </div>
+      </div>
+      <div class="timeline-item">
+        <div class="timeline-phase">FASE 6 · Sem 21-24</div>
+        <div class="timeline-content">
+          <h4>Sistematización</h4>
+          <p>Dashboard NEXUS en tiempo real. Modelo LTV. Threshold automations. ROI review para Mes 7+.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- SLIDE 7: STACK -->
+  <div class="slide">
+    <div class="label label-purple">Stack Tecnologico</div>
+    <h2>Herramientas <span class="highlight">clave</span></h2>
+    <p class="subtitle">Open source primero, cloud cuando escala. Costo operativo minimo.</p>
+    <div class="grid-3">
+      <div class="card">
+        <div class="card-icon">🎭</div>
+        <h3>Google Flow</h3>
+        <p>Nano Banana 2 para generacion de avatar. 10 variantes con consistencia facial.</p>
+      </div>
+      <div class="card">
+        <div class="card-icon">🤖</div>
+        <h3>ComfyUI</h3>
+        <p>Motor de generacion de video. Modelos: LTX-2.3, Wan 2.1, CogVideoX-5B. I2V pipeline.</p>
+      </div>
+      <div class="card">
+        <div class="card-icon">🗣️</div>
+        <h3>ElevenLabs</h3>
+        <p>TTS premium para voz del avatar. Voz clonada consistente. $5-22/mes.</p>
+      </div>
+      <div class="card">
+        <div class="card-icon">⚡</div>
+        <h3>Supabase</h3>
+        <p>Base de datos centralizada. Tracking bounties, leads, metricas. Dashboard en tiempo real.</p>
+      </div>
+      <div class="card">
+        <div class="card-icon">🔗</div>
+        <h3>n8n</h3>
+        <p>Automatizacion de email nurture. 14 secuencias bounty. Webhooks. Auto-respuesta.</p>
+      </div>
+      <div class="card">
+        <div class="card-icon">🌐</div>
+        <h3>Amazon OneLink</h3>
+        <p>Multi-pais automatico. Un enlace detecta ES/US/UK. Sin configuracion compleja.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- SLIDE 8: PROYECCION -->
+  <div class="slide">
+    <div class="label label-green">Financiero</div>
+    <h2>Proyección de <span class="highlight">Ingresos</span></h2>
+    <p class="subtitle">Escenario base. Todos los bounties + comision de producto. Break-even en Mes 5-6.</p>
+    <div class="grid-3" style="max-width: 900px;">
+      <div class="card" style="text-align: center;">
+        <div style="font-size: 12px; color: rgba(255,255,255,0.3); text-transform: uppercase; letter-spacing: 1px;">Mes 1</div>
+        <div class="amount" style="margin: 8px 0;">€65</div>
+        <div style="font-size: 13px; color: rgba(255,255,255,0.4);">Audible €30<br>Prime €15<br>Music €5 · Kindle €5 · Producto €10</div>
+      </div>
+      <div class="card" style="text-align: center;">
+        <div style="font-size: 12px; color: rgba(255,255,255,0.3); text-transform: uppercase; letter-spacing: 1px;">Mes 3</div>
+        <div class="amount green" style="margin: 8px 0;">€270</div>
+        <div style="font-size: 13px; color: rgba(255,255,255,0.4);">Audible €120<br>Prime €45<br>Music €30 · Kindle €15 · Producto €40 · Otros €20</div>
+      </div>
+      <div class="card" style="text-align: center;">
+        <div style="font-size: 12px; color: rgba(255,255,255,0.3); text-transform: uppercase; letter-spacing: 1px;">Mes 6</div>
+        <div class="amount purple" style="margin: 8px 0;">€655</div>
+        <div style="font-size: 13px; color: rgba(255,255,255,0.4);">Audible €300<br>Prime €90<br>Music €60 · Kindle €45 · Producto €100 · Otros €60</div>
+      </div>
+    </div>
+    <div class="card" style="margin-top: 24px; text-align: center; max-width: 600px;">
+      <div style="font-size: 13px; color: rgba(255,255,255,0.4);">Escenario Optimista Mes 6</div>
+      <div style="font-size: 42px; font-weight: 800; color: #4ade80; margin-top: 8px;">€1,200</div>
+    </div>
+  </div>
+
+  <!-- SLIDE 9: CIERRE -->
+  <div class="slide">
+    <div class="label label-blue">KTM · Medusa Group</div>
+    <h1>Es momento de <span class="highlight">construir</span></h1>
+    <p class="subtitle" style="max-width: 600px;">Tenemos la tecnologia, el plan y el equipo. Amazon paga por cada registro. El avatar IA multiplica el alcance. Ahora solo falta ejecutar.</p>
+    <div class="stat-row">
+      <div class="stat">
+        <div class="stat-number blue">Fase 0</div>
+        <div class="stat-label">Planeación → 100% documentada</div>
+      </div>
+      <div class="stat">
+        <div class="stat-number green">Siguiente</div>
+        <div class="stat-label">Crear avatar + generar enlaces</div>
+      </div>
+    </div>
+    <p style="margin-top: 60px; font-size: 13px; color: rgba(255,255,255,0.15);">Angel Salazar · Gustavo Salazar · ASDIGITAL SOD · 2026</p>
+  </div>
+
+</div>
+
+<div class="nav">
+  <button id="prevBtn" disabled>&larr; Anterior</button>
+  <div class="dots" id="dots"></div>
+  <button id="nextBtn">Siguiente &rarr;</button>
+</div>
+
+<script>
+  const slides = document.querySelectorAll('.slide');
+  const totalSlides = slides.length;
+  let current = 0;
+
+  const slideContainer = document.getElementById('slides');
+  const prevBtn = document.getElementById('prevBtn');
+  const nextBtn = document.getElementById('nextBtn');
+  const dotsContainer = document.getElementById('dots');
+
+  for (let i = 0; i < totalSlides; i++) {
+    const dot = document.createElement('div');
+    dot.className = 'dot' + (i === 0 ? ' active' : '');
+    dot.addEventListener('click', () => goTo(i));
+    dotsContainer.appendChild(dot);
+  }
+
+  function update() {
+    slideContainer.style.transform = `translateX(-${current * 100}vw)`;
+    prevBtn.disabled = current === 0;
+    nextBtn.disabled = current === totalSlides - 1;
+    document.querySelectorAll('.dot').forEach((d, i) => {
+      d.classList.toggle('active', i === current);
+    });
+  }
+
+  function goTo(n) {
+    current = Math.max(0, Math.min(n, totalSlides - 1));
+    update();
+  }
+
+  prevBtn.addEventListener('click', () => goTo(current - 1));
+  nextBtn.addEventListener('click', () => goTo(current + 1));
+
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'ArrowRight' || e.key === ' ' || e.key === 'ArrowDown') goTo(current + 1);
+    if (e.key === 'ArrowLeft' || e.key === 'ArrowUp') goTo(current - 1);
+  });
+</script>
+</body>
+</html>
